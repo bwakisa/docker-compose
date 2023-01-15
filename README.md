@@ -74,14 +74,6 @@
 
 ```
 
-
-- Tester l'api sur le navigateur
-
-```
-    http://localhost:8080/api
-
-```
-
 - Créer la base des données
 
 ```
@@ -105,8 +97,14 @@
     php bin/console doctrine:fixtures:load   
 
 ```
+- Tester l'api sur le navigateur
 
-- Quitter le shell du container api
+```
+    http://localhost:8080
+
+```
+
+- Quitter le shell du container php
 
 ```
 
