@@ -17,7 +17,7 @@
 - Une fois acceder au shell, cloner le projet git
 
 ```
-    git clone https://github.com/cmukanisa/sf6-bwakisa.git .
+    git clone https://github.com/bwakisa/bwakisa.git .
 
 ```
 
