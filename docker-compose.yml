@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+# bwakisa
+  db_bwakisa:
+    container_name: db_bwakisa
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_BWAKISA_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_BWAKISA_DATABASE}
+      MYSQL_USER: ${DB_BWAKISA_USER}
+      MYSQL_PASSWORD: ${DB_BWAKISA_PASSWORD}
+    ports:
+      - ${DB_BWAKISA_PORT}:3306
+    volumes:
+      - ./mysql_bwakisa:/var/lib/mysql
+
+  php_bwakisa:
+    container_name: php_bwakisa
+    build:
+      context: ./php
+    ports:
+      - ${PHP_BWAKISA_PORT}:9000
+    volumes:
+      - ./app_bwakisa:/var/www/symfony_docker
+    depends_on:
+      - db_bwakisa
+    environment:
+      TOKEN_ACCESS: ${TOKEN_ACCESS}
+
+  nginx_bwakisa:
+    container_name: nginx_bwakisa
+    image: nginx:stable-alpine
+    ports:
+      - '${NGINX_BWAKISA_PORT}:80'
+    volumes:
+      - ./app_bwakisa:/var/www/symfony_docker
+      - ./nginx_bwakisa/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php_bwakisa
+      - db_bwakisa
